@@ -29,12 +29,6 @@ nav[class*="guilds"] {
         transition: border-radius 150ms ease;
     }
 
-    [class*="childWrapper"] img:hover,
-    img[class*="icon"]:hover,
-    [class*="circleIconButton"]:hover {
-        border-radius: 12px !important;
-    }
-
     [class*="shiftSVG"] {
         top: 0px;
         left: 0px;

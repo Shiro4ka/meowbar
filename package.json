@@ -1,0 +1,18 @@
+{
+  "name": "squircle-guildbar",
+  "version": "1.0.0",
+  "description": "Discord Vencord theme - Squircle shaped guild avatars",
+  "main": "SquircleGuildbar.css",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "discord",
+    "vencord",
+    "theme",
+    "guildbar",
+    "squircle"
+  ],
+  "author": "YourName",
+  "license": "MIT"
+}

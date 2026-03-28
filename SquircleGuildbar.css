@@ -1,95 +1,51 @@
-/* Squircle Guildbar - Discord Server List Theme */
-/* Import: @import url("https://raw.githubusercontent.com/yourusername/SquircleGuildbar/main/SquircleGuildbar.css"); */
+/* Revert visual refresh server list (Old square servers) */
+@import url("https://scattagain.github.io/VencordStuff/css/GuildbarRevert.css");
 
 :root {
-    /* === Размеры === */
-    --sq-avatar-size: 48px;
-    --sq-folder-size: var(--sq-avatar-size);
-    --sq-border-radius: 16px;
-    
-    /* === Скалирование масок === */
-    --sq-blob-scale: 48;
-    --sq-folder-blob-scale: var(--sq-blob-scale);
-    
-    /* === Паддинги === */
-    --sq-guild-list-padding: 12px;
-    --sq-custom-guild-list-width: calc(
-        max(var(--sq-avatar-size), var(--sq-folder-size))
-        + var(--sq-guild-list-padding) * 2
-    );
-    
-    /* === Переходы === */
-    --sq-transition-speed: 150ms;
+    --guildbar-avatar-size: 48px !important;
+    --blob-scale: 48;
+    --guildbar-folder-size: var(--guildbar-avatar-size);
+    --folder-blob-scale: var(--blob-scale);
+    --custom-guild-list-padding: 12px;
 }
 
-/* === Основной гильдбар === */
-nav[class*="-guilds"] {
-    /* Маски на квадраты */
-    defs > path {
+/* Основные селекторы для гильдбара */
+nav[class*="guilds"] {
+    /* Переопределяем blob маски на квадраты */
+    defs > path[id*="blob_mask"] {
         d: path("M0 0.464C0 0.301585 0 0.220377 0.0316081 0.158343C0.0594114 0.103776 0.103776 0.0594114 0.158343 0.0316081C0.220377 0 0.301585 0 0.464 0H0.536C0.698415 0 0.779623 0 0.841657 0.0316081C0.896224 0.0594114 0.940589 0.103776 0.968392 0.158343C1 0.220377 1 0.301585 1 0.464V0.536C1 0.698415 1 0.779623 0.968392 0.841657C0.940589 0.896224 0.896224 0.940589 0.841657 0.968392C0.779623 1 0.698415 1 0.536 1H0.464C0.301585 1 0.220377 1 0.158343 0.968392C0.103776 0.940589 0.0594114 0.896224 0.0316081 0.841657C0 0.779623 0 0.698415 0 0.536V0.464Z") !important;
     }
+}
 
-    /* === Размеры элементов === */
-    defs, 
-    [class*="-blobContainer"],
-    [class*="-listItemWrapper"],
-    [class*="-wrapper"],
-    [class*="-tutorialContainer"] [class*="-wrapper"],
-    svg[class*="-placeholderMask"],
-    svg:not([class*="-placeholderMask"]) > foreignObject {
-        width: var(--sq-avatar-size) !important;
-        height: var(--sq-avatar-size) !important;
+/* Размеры аватаров */
+nav[class*="guilds"] {
+    defs,
+    [class*="blobContainer"],
+    [class*="listItemWrapper"],
+    [class*="wrapper"],
+    svg[class*="placeholderMask"],
+    svg:not([class*="placeholderMask"]) > foreignObject {
+        width: var(--guildbar-avatar-size) !important;
+        height: var(--guildbar-avatar-size) !important;
     }
 
-    /* Драг элементы */
-    [class*="-dragInner"] {
-        width: 40px;
-        height: 40px;
+    /* Круглые аватары при наведении */
+    [class*="childWrapper"] img,
+    img[class*="icon"],
+    [class*="folderPreviewGuildIcon"],
+    [class*="circleIconButton"] {
+        border-radius: 50% !important;
+        transition: border-radius 150ms ease;
     }
 
-    /* Зоны перетаскивания */
-    [class*="-dragOver"] {
-        &[class*="-target"]::before {
-            width: 100%;
-            left: calc(var(--sq-avatar-size) / 4);
-        }
-
-        &[class*="-centerTarget"]::before {
-            top: calc(var(--sq-avatar-size) / 2 + 8px)
-        }
+    /* Квадратные аватары в нормальном состоянии */
+    [class*="childWrapper"] img:not(:hover),
+    img[class*="icon"]:not(:hover) {
+        border-radius: 8px !important;
     }
 
-    /* SVG в обертке */
-    [class*="-childWrapper "] > svg {
-        width: calc(var(--sq-avatar-size) - 18px);
-        height: calc(var(--sq-avatar-size) - 18px);
-    }
-
-    /* === Основной стиль: квадратные аватары === */
-    [class*="-childWrapper"],
-    [class*="-childWrapper"] img,
-    img[class*="-icon"],
-    [class*="-folderPreviewGuildIcon"],
-    [class*="-circleIconButton"] {
-        border-radius: var(--sq-border-radius) !important;
-        transition: border-radius var(--sq-transition-speed) linear;
-
-        [class*="-selected"] &,
-        &[class*="-selected"] {
-            border-radius: var(--sq-border-radius) !important;
-        }
-    }
-
-    /* Фиксим позиционирование */
-    [class*="-wrapper_cc5dd2"],
-    [class*="-blobContainer"] {
-        position: relative !important;
-        top: 0 !important;
-        left: 0 !important;
-    }
-
-    /* === SVG сдвиги === */
-    [class*="-shiftSVG"] {
+    /* Сдвиг SVG */
+    [class*="shiftSVG"] {
         top: 0px;
         left: 0px;
 
@@ -98,93 +54,74 @@ nav[class*="-guilds"] {
         }
     }
 
-    /* === Маски и бейджи === */
+    /* Маски и бейджи */
     mask {
-        --badge-offset: calc(var(--sq-avatar-size) - 40px);
+        --badge-offset: calc(var(--guildbar-avatar-size) - 40px);
 
-        &:not([class*="-folderHeader"] mask) {
-            use[href$="-lower_badge_masks"] {
-                translate: var(--badge-offset) var(--badge-offset);
-            }
+        use[href$="-lower_badge_masks"] {
+            translate: var(--badge-offset) var(--badge-offset);
+        }
 
-            use[href$="-upper_badge_masks"] {
-                translate: var(--badge-offset);
-            }
+        use[href$="-upper_badge_masks"] {
+            translate: var(--badge-offset);
         }
 
         use[href$="-blob_mask"] {
-            scale: var(--sq-blob-scale);
+            scale: var(--blob-scale);
         }
     }
 
-    /* === Папки === */
-    [class*="-folderPreviewWrapper"] {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        [class$="-folderPreview"] {
-            width: calc(var(--sq-folder-size) * (2/3) + var(--custom-folder-preview-gap, 4px));
-            height: calc(var(--sq-folder-size) * (2/3) + var(--custom-folder-preview-gap, 4px));
-        }
+    /* Папки */
+    [class*="folderHeader"] {
+        --guildbar-avatar-size: var(--guildbar-folder-size);
     }
 
-    [class*="-iconSizeMini "] {
-        width: calc(var(--sq-folder-size) / 3);
-        height: calc(var(--sq-folder-size) / 3);
+    [class*="folderIcon"] {
+        background-color: var(--bg-mod-subtle);
 
-        [class*="-acronym"] {
-            line-height: calc(var(--sq-folder-size) / 3);
-        }
-
-        &[style*="font-size: 12px;"] {
-            font-size: 10px !important;
-        }
-        &[style*="font-size: 10px;"] {
-            font-size: 7px !important;
-        }
-        &[style*="font-size: 8px;"] {
-            font-size: 6px !important;
-        }
-    }
-
-    [class*="-folderButton"] {
-        overflow: visible;
-    }
-
-    [class*="-folderHeader"] {
-        --sq-avatar-size: var(--sq-folder-size);
-    }
-    
-    [class*="-folderIcon"] {
         svg {
             width: 24px !important;
             height: 24px !important;
         }
-        
-        background-color: var(--bg-mod-subtle);
-    }
-    
-    /* DMs блок */
-    #guild-list-unread-dms > div {
-        height: var(--sq-avatar-size) !important;
     }
 
-    /* Раскрытие папок */
-    [class*="-isExpanded"] {
-        [class*="-folderGroupBackground"] {
-            border-bottom-left-radius: 24px;
-            border-bottom-right-radius: 24px;
+    [class*="isExpanded"] {
+        [class*="folderGroupBackground"] {
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
         }
 
-        [class*="-stack"] {
+        [class*="stack"] {
             height: auto !important;
         }
     }
 
-    /* Контент папок */
     [id^="folder-items-"] {
-        --sq-avatar-size: var(--sq-folder-size);
-        --sq-blob-scale: var(--sq-folder-blob-scale);
+        --guildbar-avatar-size: var(--guildbar-folder-size);
+        --blob-scale: var(--folder-blob-scale);
+    }
+
+    /* DMs блок */
+    #guild-list-unread-dms > div {
+        height: var(--guildbar-avatar-size) !important;
+    }
+}
+
+/* Альтернативный вариант если выше не сработает - более агрессивный */
+@supports (--css: supports) {
+    /* Убираем закругления и делаем квадраты */
+    [class*="wrapper_cc5dd2"],
+    [class*="blobContainer"] {
+        border-radius: 8px !important;
+    }
+
+    /* Аватарки серверов */
+    [class*="wrapper__6e9f8"] {
+        border-radius: 8px !important;
+    }
+
+    /* Иконки папок */
+    [class*="folderButtonInner"] {
+        border-radius: 8px !important;
     }
 }

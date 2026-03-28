@@ -2,7 +2,7 @@
 @import url("https://scattagain.github.io/VencordStuff/css/GuildbarRevert.css");
 
 :root {
-    --guildbar-avatar-size: 48px !important;
+    --guildbar-avatar-size: 48px;
     --blob-scale: 48;
     --guildbar-folder-size: var(--guildbar-avatar-size);
     --folder-blob-scale: var(--blob-scale);
@@ -29,19 +29,20 @@ nav[class*="guilds"] {
         height: var(--guildbar-avatar-size) !important;
     }
 
-    /* Круглые аватары при наведении */
+    /* Квадратные аватары */
     [class*="childWrapper"] img,
     img[class*="icon"],
     [class*="folderPreviewGuildIcon"],
     [class*="circleIconButton"] {
-        border-radius: 50% !important;
+        border-radius: 8px !important;
         transition: border-radius 150ms ease;
     }
 
-    /* Квадратные аватары в нормальном состоянии */
-    [class*="childWrapper"] img:not(:hover),
-    img[class*="icon"]:not(:hover) {
-        border-radius: 8px !important;
+    /* При наведении становятся более круглыми */
+    [class*="childWrapper"] img:hover,
+    img[class*="icon"]:hover,
+    [class*="circleIconButton"]:hover {
+        border-radius: 12px !important;
     }
 
     /* Сдвиг SVG */
